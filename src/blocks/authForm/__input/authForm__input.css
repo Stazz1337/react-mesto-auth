@@ -1,4 +1,4 @@
-.register__input {
+.authForm__input {
   color: #cccccc;
   background-color: #000000;
   border: none;
@@ -6,17 +6,16 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  margin: 0 0 30px;
-  padding-bottom: 13px;
+  margin: 0;
   outline: none;
 }
 
 @media (max-width: 640px) {
-  .register__input {
-    max-width: 238px;
+  .authForm__input {
+    min-width: 260px;
   }
 }
 
-.register__input:last-of-type {
+.authForm__input:last-of-type {
   margin: 0;
 }

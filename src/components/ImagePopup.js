@@ -1,27 +1,8 @@
-import { useEffect } from "react";
+import Popup from "./Popup";
 
 function ImagePopup(props) {
-  useEffect(() => {
-    if (!(props.card && Object.keys(props.card).length !== 0)) return;
-
-    function handleESC(e) {
-      if (e.key === "Escape") {
-        props.onClose();
-      }
-    }
-
-    document.addEventListener("keydown", handleESC);
-
-    return () => document.removeEventListener("keydown", handleESC);
-  }, [props.card, props]);
-
   return (
-    <div
-      className={`popup popup_type_image ${
-        props.card && Object.keys(props.card).length !== 0 ? "popup_opened" : ""
-      }`}
-      onMouseDown={props.onOuterClick}
-    >
+    <Popup onClose={props.onClose} isOpen={props.isOpen}>
       <div className="popup__container-image">
         <button
           className="popup__close link"
@@ -29,6 +10,7 @@ function ImagePopup(props) {
           aria-label="закрыть"
           onClick={props.onClose}
         />
+
         <img
           src={props.card.link}
           alt={props.card.name}
@@ -36,7 +18,7 @@ function ImagePopup(props) {
         />
         <p className="popup__image-title">{props.card.name}</p>
       </div>
-    </div>
+    </Popup>
   );
 }
 

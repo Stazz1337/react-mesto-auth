@@ -1,25 +1,20 @@
 import PopupWithForm from "./PopupWithForm";
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
+
+import { useFormAndValidation } from "../hooks/useFormAndValidation";
 
 function AddPlacePopup(props) {
-  const cardNameRef = useRef();
-  const cardLinkRef = useRef();
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormAndValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    props.onAddPlace({
-      name: cardNameRef.current.value,
-      link: cardLinkRef.current.value,
-    });
+    props.onAddPlace(values);
   }
 
   useEffect(() => {
-    if (!props.isOpen) {
-      cardNameRef.current.value = "";
-      cardLinkRef.current.value = "";
-    }
-  }, [props.isOpen]);
+    resetForm();
+  }, [props.isOpen, resetForm]);
 
   return (
     <PopupWithForm
@@ -28,39 +23,46 @@ function AddPlacePopup(props) {
       buttonText={props.isLoading ? "Сохранение..." : "Создать"}
       isOpen={props.isOpen}
       onClose={props.onClose}
-      onOuterClick={props.onOuterClick}
       onSubmit={handleSubmit}
-      children={
-        <>
-          <input
-            ref={cardNameRef}
-            type="text"
-            id="imageName-input"
-            name="name"
-            className="popup__text popup__text_type_imageName"
-            placeholder="Название"
-            minLength={2}
-            maxLength={30}
-            required=""
-          />
-          <span className="popup__input-error imageName-input-error">
-            Error
-          </span>
-          <input
-            ref={cardLinkRef}
-            type="url"
-            id="imageLink-input"
-            name="link"
-            className="popup__text popup__text_type_imageLink"
-            placeholder="Ссылка на картинку"
-            required=""
-          />
-          <span className="popup__input-error imageLink-input-error">
-            Error
-          </span>
-        </>
-      }
-    />
+      buttonState={isValid}
+    >
+      <input
+        type="text"
+        id="imageName-input"
+        name="name"
+        className="popup__text popup__text_type_imageName"
+        placeholder="Название"
+        minLength={2}
+        maxLength={30}
+        required
+        onChange={handleChange}
+        value={values.name || ""}
+      />
+      <span
+        className={`popup__input-error ${
+          errors.name ? "popup__input-error_active" : ""
+        }`}
+      >
+        {errors.name}
+      </span>
+      <input
+        type="url"
+        id="imageLink-input"
+        name="link"
+        className="popup__text popup__text_type_imageLink"
+        placeholder="Ссылка на картинку"
+        required
+        onChange={handleChange}
+        value={values.link || ""}
+      />
+      <span
+        className={`popup__input-error ${
+          errors.link ? "popup__input-error_active" : ""
+        }`}
+      >
+        {errors.link}
+      </span>
+    </PopupWithForm>
   );
 }
 

@@ -1,19 +1,21 @@
 import PopupWithForm from "./PopupWithForm";
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
+
+import { useFormAndValidation } from "../hooks/useFormAndValidation";
 
 function EditAvatarPopup(props) {
-  const avatarRef = useRef();
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormAndValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.onUpdateAvatar(avatarRef.current.value);
+
+    props.onUpdateAvatar(values.avatar);
   }
 
   useEffect(() => {
-    if (!props.isOpen) {
-      avatarRef.current.value = "";
-    }
-  }, [props.isOpen]);
+    resetForm();
+  }, [props.isOpen, resetForm]);
 
   return (
     <PopupWithForm
@@ -22,25 +24,27 @@ function EditAvatarPopup(props) {
       buttonText={props.isLoading ? "Сохранение..." : "Сохранить"}
       isOpen={props.isOpen}
       onClose={props.onClose}
-      onOuterClick={props.onOuterClick}
       onSubmit={handleSubmit}
-      children={
-        <>
-          <input
-            ref={avatarRef}
-            type="url"
-            id="avatarLink-input"
-            name="imageLink"
-            className="popup__text popup__text_type_imageLink"
-            placeholder="Ссылка на картинку"
-            required=""
-          />
-          <span className="popup__input-error avatarLink-input-error">
-            Error
-          </span>
-        </>
-      }
-    />
+      buttonState={isValid}
+    >
+      <input
+        type="url"
+        id="avatarLink-input"
+        name="avatar"
+        className="popup__text"
+        placeholder="Ссылка на картинку"
+        required
+        value={values.avatar || ""}
+        onChange={handleChange}
+      />
+      <span
+        className={`popup__input-error ${
+          errors.avatar ? "popup__input-error_active" : ""
+        }`}
+      >
+        {errors.avatar}
+      </span>
+    </PopupWithForm>
   );
 }
 

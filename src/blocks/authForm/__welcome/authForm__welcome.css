@@ -1,4 +1,4 @@
-.register__welcome {
+.authForm__welcome {
   font-size: 24px;
   font-weight: 900;
   line-height: 29px;
@@ -7,7 +7,7 @@
 }
 
 @media (max-width: 640px) {
-  .register__welcome {
+  .authForm__welcome {
     align-items: center;
     margin: 40px 0;
   }

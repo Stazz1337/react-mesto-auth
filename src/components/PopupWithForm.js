@@ -1,27 +1,8 @@
-import { useEffect } from "react";
+import Popup from "./Popup";
 
 function PopupWithForm(props) {
-  useEffect(() => {
-    if (!props.isOpen) return;
-
-    function handleESC(e) {
-      if (e.key === "Escape") {
-        props.onClose();
-      }
-    }
-
-    document.addEventListener("keydown", handleESC);
-
-    return () => document.removeEventListener("keydown", handleESC);
-  }, [props.isOpen, props]);
-
   return (
-    <div
-      className={`popup popup_type_${props.name} ${
-        props.isOpen ? "popup_opened" : ""
-      }`}
-      onMouseDown={props.onOuterClick}
-    >
+    <Popup onClose={props.onClose} isOpen={props.isOpen}>
       <div className="popup__container">
         <button
           className="popup__close link"
@@ -29,24 +10,28 @@ function PopupWithForm(props) {
           aria-label="закрыть"
           onClick={props.onClose}
         />
+
         <form
-          className={`popup__form popup__form_type_${props.name}`}
+          className={`popup__form`}
           name={props.name}
-          // noValidate=""
+          noValidate
           onSubmit={props.onSubmit}
         >
-          <h2 className={`popup__heading popup__heading_${props.name}`}>
-            {props.title}
-          </h2>
+          <h2 className={`popup__heading`}>{props.title}</h2>
 
           {props.children}
 
-          <button name="button" type="submit" className="popup__button">
+          <button
+            name="button"
+            type="submit"
+            className="popup__button"
+            disabled={!props.buttonState}
+          >
             {props.buttonText}
           </button>
         </form>
       </div>
-    </div>
+    </Popup>
   );
 }
 

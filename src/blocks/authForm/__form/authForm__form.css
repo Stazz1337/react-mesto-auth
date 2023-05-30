@@ -1,4 +1,4 @@
-.register__form {
+.authForm__form {
   display: flex;
   flex-direction: column;
   max-width: 358px;
@@ -9,7 +9,7 @@
 }
 
 @media (max-width: 640px) {
-  .register__form {
+  .authForm__form {
     align-items: center;
   }
 }

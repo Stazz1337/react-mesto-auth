@@ -27,6 +27,8 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
 
+  const [isImagePopupOpen, setImagePopupOpen] = useState(false);
+
   const [isInfoPopupOpen, setInfoPopupOpen] = useState(false);
 
   const [cardsResult, setCardsResult] = useState([]);
@@ -47,7 +49,6 @@ function App() {
     auth
       .authorize(email, password)
       .then((data) => {
-        console.log(data);
         localStorage.setItem("jwt", data.token);
 
         setUserEmail(email);
@@ -117,6 +118,7 @@ function App() {
 
   function handleCardClick(e) {
     setSelectedCard(e);
+    setImagePopupOpen(true);
   }
 
   function handleEditProfileClick() {
@@ -137,15 +139,7 @@ function App() {
     setEditAvatarPopupOpen(false);
     setSelectedCard({});
     setInfoPopupOpen(false);
-  }
-
-  function handleOuterClick(evt) {
-    if (evt.target.classList.contains("popup_opened")) {
-      closeAllPopups();
-    }
-    if (evt.target.classList.contains("popup__close")) {
-      closeAllPopups();
-    }
+    setImagePopupOpen(false);
   }
 
   function handleCardLike(card) {
@@ -264,7 +258,6 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          onOuterClick={handleOuterClick}
           onUpdateUser={handleUpdateUser}
           isLoading={isLoading}
         />
@@ -272,7 +265,6 @@ function App() {
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          onOuterClick={handleOuterClick}
           onUpdateAvatar={handleUpdateAvatar}
           isLoading={isLoading}
         />
@@ -280,7 +272,6 @@ function App() {
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          onOuterClick={handleOuterClick}
           onAddPlace={handleAddPlaceSubmit}
           isLoading={isLoading}
         />
@@ -288,7 +279,6 @@ function App() {
         <InfoTooltip
           isOpen={isInfoPopupOpen}
           onClose={closeAllPopups}
-          onOuterClick={handleOuterClick}
           isReg={isReg}
         />
 
@@ -297,7 +287,7 @@ function App() {
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}
-          onOuterClick={handleOuterClick}
+          isOpen={isImagePopupOpen}
         />
       </CurrentUserContext.Provider>
     </div>

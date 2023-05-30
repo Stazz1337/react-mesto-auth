@@ -1,8 +1,7 @@
-.login {
+.authForm {
   color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 320px;
 }

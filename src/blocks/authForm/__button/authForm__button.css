@@ -1,5 +1,5 @@
-.register__button {
-  margin-top: 216px;
+.authForm__button {
+  margin-top: 186px;
   text-align: center;
   border: none;
   background-color: #ffffff;
@@ -11,15 +11,15 @@
   border-radius: 2px;
 }
 
-.register__button:hover {
+.authForm__button:hover {
   opacity: 0.85;
   cursor: pointer;
 }
 
 @media (max-width: 640px) {
-  .register__button {
+  .authForm__button {
     max-width: 260px;
     height: 46px;
-    margin-top: 173px;
+    margin-top: 143px;
   }
 }

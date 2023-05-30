@@ -1,6 +1,7 @@
 import pass from "../images/popup-info-pass.svg";
 import fail from "../images/popup-info-fail.svg";
 import { useEffect } from "react";
+import Popup from "./Popup";
 
 function InfoTooltip(props) {
   useEffect(() => {
@@ -18,10 +19,7 @@ function InfoTooltip(props) {
   }, [props.isOpen, props]);
 
   return (
-    <div
-      onMouseDown={props.onOuterClick}
-      className={`popup popup_type_info  ${props.isOpen ? "popup_opened" : ""}`}
-    >
+    <Popup onClose={props.onClose} isOpen={props.isOpen}>
       <div className="popup__container">
         <button
           className="popup__close link"
@@ -42,7 +40,7 @@ function InfoTooltip(props) {
             : "Что-то пошло не так! Попробуйте ещё раз."}
         </h2>
       </div>
-    </div>
+    </Popup>
   );
 }
 
